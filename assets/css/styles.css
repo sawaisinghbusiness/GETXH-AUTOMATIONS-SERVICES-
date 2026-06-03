@@ -227,6 +227,7 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
   opacity:0;transform:translateY(8px);animation:bubbleIn .4s var(--ease) forwards}
 .bubble--in{align-self:flex-start;background:#fff;border-top-left-radius:0}
 .bubble--out{align-self:flex-end;background:#D9FDD3;border-top-right-radius:0}
+.bubble--tag{align-self:center;background:rgba(16,185,129,.13);color:var(--brand-dk);font-weight:700;font-size:.74rem;border:1px solid rgba(16,185,129,.25);text-align:center;max-width:92%}
 .bubble .meta{display:block;text-align:right;font-size:.6rem;color:#667781;margin-top:2px;line-height:1}
 .bubble--out .meta i{font-style:normal;color:#53bdeb;margin-left:3px;letter-spacing:-2px;font-size:.72rem}
 @keyframes bubbleIn{to{opacity:1;transform:none}}

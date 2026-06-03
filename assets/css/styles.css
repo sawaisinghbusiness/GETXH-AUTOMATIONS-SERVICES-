@@ -125,7 +125,7 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .brand__name b{font-weight:850}
 .brand__name span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .brand__logo{width:44px;height:44px;flex:none;border-radius:12px;
-  background:#fff url(../logo.jpg) no-repeat 50% 30%;background-size:235%;
+  background:#fff url(../logo.jpg?v=2) no-repeat 50% 50%;background-size:165%;
   border:1px solid var(--line);box-shadow:var(--sh-sm)}
 .footer__brand .brand__logo{border-color:rgba(255,255,255,.16)}
 @media(max-width:560px){.brand__logo{width:40px;height:40px}}

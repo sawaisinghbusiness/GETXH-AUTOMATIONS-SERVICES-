@@ -194,7 +194,7 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 /* Zoom the whole page out on phones so the 2-column layout fits.
    Works on real phones, DevTools AND a resized desktop window. */
 @media(max-width:600px){
-  body{zoom:.95}
+  body{zoom:.65}
 }
 
 /* ---------- Phone / WhatsApp mockup ---------- */
@@ -365,19 +365,24 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 @media(max-width:840px){.steps{grid-template-columns:1fr}}
 
 /* ---------- Before / After ---------- */
-.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:stretch;max-width:960px;margin:0 auto}
-.ba__col{border-radius:var(--r-lg);padding:30px;border:1px solid var(--line);background:#fff}
-.ba__col h4{font-size:.8rem;font-weight:750;text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px}
-.ba__col ul{display:flex;flex-direction:column;gap:13px}
-.ba__col li{position:relative;padding-left:30px;font-size:.96rem}
-.ba__col li::before{position:absolute;left:0;top:1px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:.7rem;font-weight:800}
-.ba__before h4{color:#DC2626}
-.ba__before li::before{content:"✕";background:#FEE2E2;color:#DC2626}
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:stretch;max-width:980px;margin:0 auto}
+.ba__col{position:relative;border-radius:var(--r-lg);padding:34px 30px;border:1px solid var(--line);background:#fff;box-shadow:var(--sh-sm);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.ba__col:hover{transform:translateY(-5px);box-shadow:var(--sh-md)}
+.ba__before{background:linear-gradient(165deg,#FFF6F6,#fff);border-color:#FECACA}
 .ba__after{background:linear-gradient(165deg,#F0FDF8,#fff);border-color:#BBF7D6}
-.ba__after h4{color:#047857}
-.ba__after li::before{content:"✓";background:#D1FAE5;color:#047857}
-.ba__arrow{align-self:center;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff;font-size:1.4rem;box-shadow:var(--sh-glow)}
-@media(max-width:820px){.ba{grid-template-columns:1fr}.ba__arrow{transform:rotate(90deg);margin:0 auto}}
+.ba__tag{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:750;text-transform:uppercase;letter-spacing:.06em;padding:7px 15px 7px 11px;border-radius:999px;margin-bottom:24px}
+.ba__tag svg{width:17px;height:17px;flex:none}
+.ba__tag--before{background:#FEE2E2;color:#DC2626}
+.ba__tag--after{background:#D1FAE5;color:#047857}
+.ba__col ul{display:flex;flex-direction:column;gap:14px}
+.ba__col li{display:flex;align-items:flex-start;gap:12px;font-size:.96rem;color:var(--slate);line-height:1.45}
+.ba__ic{flex:none;width:23px;height:23px;border-radius:50%;display:grid;place-items:center;margin-top:1px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.ba__ic svg{width:13px;height:13px}
+.ba__before .ba__ic{background:#FEE2E2;color:#DC2626}
+.ba__after .ba__ic{background:#D1FAE5;color:#047857}
+.ba__arrow{align-self:center;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff;box-shadow:var(--sh-glow)}
+.ba__arrow svg{width:24px;height:24px}
+@media(max-width:820px){.ba{grid-template-columns:1fr}.ba__arrow{transform:rotate(90deg);margin:-6px auto}}
 
 /* ---------- Dashboard mock ---------- */
 .dash{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-md);overflow:hidden}

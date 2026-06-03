@@ -447,6 +447,9 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
   font-size:.8rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
   padding:8px 17px 8px 13px;border-radius:999px;background:var(--grad-soft);border:1px solid rgba(16,185,129,.22);box-shadow:var(--sh-sm)}
 .flow-panel__label svg{width:16px;height:16px;flex:none;color:var(--brand-dk)}
+/* delightful pop-in for each flow node as you scroll */
+.flow__node.reveal{transform:translateY(30px) scale(.9)}
+.flow__node.reveal.in{transform:none}
 
 /* ===== Lead journey timeline (Services) ===== */
 .journey{position:relative;max-width:720px;margin:0 auto}

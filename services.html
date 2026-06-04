@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700;800;850&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/styles.css?v=34" />
+<link rel="stylesheet" href="assets/css/styles.css?v=40" />
 </head>
 <body>
 
@@ -43,22 +43,36 @@
     </div>
   </section>
 
-  <!-- SERVICE 1: WhatsApp -->
-  <section class="section section--soft">
-    <div class="container hero__grid">
-      <div class="reveal">
-        <h2 style="margin:0 0 14px">WhatsApp AI Assistant</h2>
-        <p class="lead">Your customers live on WhatsApp — so that's where we win them. Every enquiry gets an instant, human-sounding reply, day or night, so you're always the first to respond.</p>
-        <ul class="offer" style="box-shadow:none;border:none;padding:0;background:none;margin-top:20px">
-          <li>Instant auto-replies to every new message</li>
-          <li>Natural, on-brand conversation flows</li>
-          <li>Handles FAQs: pricing, availability, location</li>
-          <li>Smart hand-off to you for hot leads</li>
-        </ul>
-        <a href="#" class="btn btn--primary" style="margin-top:24px" data-wa>Set this up</a>
-      </div>
-      <div class="hero__visual reveal" data-delay="2">
-        <div class="phone" style="transform:rotateY(8deg)">
+  <!-- SERVICE 1: WhatsApp showcase -->
+  <section class="section">
+    <div class="container">
+      <div class="showcase reveal">
+        <div class="showcase__grid">
+          <div class="showcase__copy">
+            <h2>WhatsApp AI Assistant</h2>
+            <p class="lead">Your buyers are already on WhatsApp — and they message several agents at once. Your AI assistant replies there in seconds, in a natural human tone, so you're always the first to respond.</p>
+            <div class="showcase__feats">
+              <div class="sfeat">
+                <div class="sfeat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></div>
+                <b>Instant replies</b><span>Every message answered in seconds, 24/7.</span>
+              </div>
+              <div class="sfeat">
+                <div class="sfeat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 0 1-.9-3.8A8.38 8.38 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5Z"/></svg></div>
+                <b>Natural tone</b><span>Human and on-brand — never robotic.</span>
+              </div>
+              <div class="sfeat">
+                <div class="sfeat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.4 2.4 0 0 1 4.6 1c0 1.6-2.2 2-2.2 3.2"/><path d="M12 17.4h.01"/></svg></div>
+                <b>Handles FAQs</b><span>Price, availability, location &amp; timings.</span>
+              </div>
+              <div class="sfeat">
+                <div class="sfeat__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11l2 2 4-4"/><path d="M2 21a8 8 0 0 1 13-6.2"/><circle cx="9.5" cy="7" r="4"/></svg></div>
+                <b>Smart hand-off</b><span>Hot leads sent to you, with full context.</span>
+              </div>
+            </div>
+            <a href="#" class="btn showcase__cta" data-wa>Set this up</a>
+          </div>
+          <div class="showcase__visual">
+            <div class="phone">
           <div class="phone__notch"></div>
           <div class="wa">
             <div class="wa__bar">
@@ -80,6 +94,8 @@
             <div class="wa__input">
               <div class="box">🙂&nbsp; Type a message</div>
               <div class="send"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5 21 12 3 3.5 3 10l13 2-13 2z"/></svg></div>
+            </div>
+          </div>
             </div>
           </div>
         </div>

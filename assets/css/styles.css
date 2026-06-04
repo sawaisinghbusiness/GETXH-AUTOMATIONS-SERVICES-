@@ -451,6 +451,45 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .flow__node.reveal{transform:translateY(30px) scale(.9)}
 .flow__node.reveal.in{transform:none}
 
+/* ===== Product showcase panel (dark, WhatsApp green) ===== */
+.showcase{position:relative;overflow:hidden;border-radius:28px;padding:50px;
+  background:linear-gradient(150deg,#0b3b32 0%,#075E54 46%,#0a4a40 100%);
+  box-shadow:0 40px 80px -36px rgba(7,94,84,.75)}
+.showcase::before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;top:-150px;right:-90px;background:radial-gradient(circle,rgba(37,211,102,.4),transparent 70%);pointer-events:none}
+.showcase::after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;bottom:-170px;left:-110px;background:radial-gradient(circle,rgba(14,165,233,.18),transparent 70%);pointer-events:none}
+.showcase__grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center}
+.showcase__copy h2{color:#fff;font-size:clamp(1.8rem,3.4vw,2.4rem);margin-bottom:14px}
+.showcase__copy .lead{color:#c2e6db}
+.showcase__feats{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:28px 0 6px}
+.sfeat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:15px;padding:16px 16px 15px;backdrop-filter:blur(6px);transition:transform .3s var(--ease),background .3s,border-color .3s}
+.sfeat:hover{transform:translateY(-5px);background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.26)}
+.sfeat__ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:11px;background:#25D366;color:#fff;box-shadow:0 10px 18px -7px rgba(37,211,102,.7)}
+.sfeat__ic svg{width:20px;height:20px}
+.sfeat b{display:block;color:#fff;font-size:.96rem;font-weight:700;margin-bottom:3px}
+.sfeat span{font-size:.83rem;color:#a9d6cb;line-height:1.45}
+.showcase__cta{margin-top:26px;background:#fff;color:#075E54;font-weight:700;box-shadow:0 14px 26px -10px rgba(0,0,0,.5)}
+.showcase__cta:hover{transform:translateY(-2px);background:#eafff6}
+.showcase__visual{position:relative;display:flex;justify-content:center}
+.showcase__visual::before{content:"";position:absolute;width:300px;height:340px;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(37,211,102,.4),transparent 70%);filter:blur(16px);z-index:0}
+.showcase__visual .phone{position:relative;z-index:1}
+@media(max-width:880px){
+  .showcase{padding:32px 20px}
+  .showcase__grid{grid-template-columns:1fr;gap:32px}
+}
+@media(max-width:420px){.showcase__feats{grid-template-columns:1fr}}
+
+/* ===== Feature tiles (2x2) ===== */
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0 6px}
+.feat{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;box-shadow:var(--sh-sm);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s}
+.feat:hover{transform:translateY(-5px);box-shadow:var(--sh-md);border-color:#dbe2ec}
+.feat__ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:12px;color:var(--brand-dk);
+  background:linear-gradient(155deg,#F0FDF8,#D1FAE5);border:1px solid rgba(16,185,129,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.feat__ic svg{width:21px;height:21px}
+.feat b{display:block;color:var(--ink);font-size:1rem;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.feat span{font-size:.87rem;color:var(--slate-2);line-height:1.45}
+@media(max-width:480px){.feat-grid{grid-template-columns:1fr}}
+
 /* ===== Lead journey timeline (Services) ===== */
 .journey{position:relative;max-width:720px;margin:0 auto}
 .journey::before{content:"";position:absolute;left:27px;top:30px;bottom:54px;width:2px;border-radius:2px;

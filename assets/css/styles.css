@@ -318,7 +318,7 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
   padding:28px;box-shadow:var(--sh-sm);overflow:hidden;
   transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s;
 }
-.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
   background:var(--grad);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s}
 .card:hover{transform:translateY(-6px);box-shadow:var(--sh-md);border-color:transparent}

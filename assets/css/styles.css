@@ -65,6 +65,12 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 
 .display{font-weight:850;letter-spacing:-.035em}
 .gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+/* hand-drawn brush underline */
+.brush{position:relative;white-space:nowrap}
+.brush__u{position:absolute;left:-1%;bottom:-.2em;width:102%;height:.42em;overflow:visible}
+.brush__u path{fill:none;stroke:url(#bgrad);stroke-width:5;stroke-linecap:round;vector-effect:non-scaling-stroke;
+  stroke-dasharray:340;stroke-dashoffset:340;animation:brushDraw .9s .5s cubic-bezier(.6,0,.3,1) forwards}
+@keyframes brushDraw{to{stroke-dashoffset:0}}
 .lead{font-size:clamp(1.05rem,1.6vw,1.25rem);color:var(--slate);line-height:1.7}
 
 .eyebrow{

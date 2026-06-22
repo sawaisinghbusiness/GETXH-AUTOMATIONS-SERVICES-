@@ -206,26 +206,30 @@ const CONFIG = {
   io.observe(body);
 })();
 
-/* ---- Contact form (demo: opens WhatsApp/email with the message) ---- */
+/* ---- Contact form: submit inquiry → confirmation (WhatsApp is a separate, optional path) ---- */
 (function contactForm() {
   const form = document.getElementById("leadForm");
   if (!form) return;
+  const success = document.getElementById("formSuccess");
+  const successTitle = document.getElementById("formSuccessTitle");
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const data = new FormData(form);
-    const name = data.get("name") || "";
-    const phone = data.get("phone") || "";
-    const business = data.get("business") || "";
-    const message = data.get("message") || "";
-    const text =
-      `New enquiry from the website:%0A%0AName: ${name}%0APhone: ${phone}%0ABusiness: ${business}%0A%0A${message}`;
-    const link = "https://wa.me/" + CONFIG.whatsappNumber + "?text=" + text;
-    const note = document.getElementById("formNote");
-    if (note) {
-      note.textContent = "Opening WhatsApp to send your details… ✅";
-      note.style.color = "var(--brand-dk)";
+    const name = (data.get("name") || "").toString().trim();
+    const firstName = name ? name.split(" ")[0] : "";
+
+    // NOTE: wire this up to your backend / Google Sheet / n8n webhook to persist the lead.
+    // For now we confirm to the user that the inquiry is in.
+
+    if (success && successTitle) {
+      successTitle.textContent = firstName
+        ? `Thanks, ${firstName} — your inquiry is in! 🎉`
+        : "Thanks — your inquiry is in! 🎉";
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-    window.open(link, "_blank", "noopener");
     form.reset();
   });
 })();

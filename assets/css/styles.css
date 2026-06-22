@@ -430,6 +430,17 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .badge--book{background:#DBEAFE;color:#1D4ED8}
 @media(max-width:560px){.dash__body{grid-template-columns:1fr}.dash__row{grid-column:span 1}}
 
+/* ---------- Workflow screenshot (Sample workflow) ---------- */
+.workflow-shot{position:relative;margin:0 auto;max-width:1000px;border-radius:var(--r-xl);overflow:hidden;
+  background:#0b1020;border:1px solid var(--line);
+  box-shadow:var(--sh-lg);padding:46px 14px 14px}
+/* browser-style top chrome */
+.workflow-shot::before{content:"";position:absolute;top:0;left:0;right:0;height:34px;background:#121a2e;border-bottom:1px solid rgba(255,255,255,.06)}
+.workflow-shot::after{content:"";position:absolute;top:13px;left:16px;width:9px;height:9px;border-radius:50%;
+  background:#FF5F57;box-shadow:16px 0 0 #FEBC2E,32px 0 0 #28C840}
+.workflow-shot img{display:block;width:100%;height:auto;border-radius:0 0 calc(var(--r-xl) - 8px) calc(var(--r-xl) - 8px)}
+@media(max-width:600px){.workflow-shot{padding:40px 8px 8px}}
+
 /* ---------- Workflow ---------- */
 .flow{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-top:10px}
 .flow__node{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:150px}
@@ -590,6 +601,17 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .cta__btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:32px 0 16px}
 .cta__fine{font-size:.86rem;color:#8FA1BA}
 
+/* ---------- Team members (About) ---------- */
+.member{text-align:center;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 20px;
+  box-shadow:var(--sh-sm);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.member:hover{transform:translateY(-6px);box-shadow:var(--sh-md);border-color:#dbe2ec}
+.member__photo{width:104px;height:104px;margin:0 auto 16px;border-radius:50%;overflow:hidden;
+  background:linear-gradient(155deg,#F0FDF8,#E0F2FE);
+  border:3px solid #fff;box-shadow:0 10px 24px -10px rgba(10,15,30,.3),0 0 0 1px var(--line)}
+.member__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.member__name{font-size:1.06rem;margin-bottom:3px}
+.member__role{font-size:.86rem;color:var(--brand-dk);font-weight:650}
+
 /* ---------- Forms ---------- */
 .form{display:grid;gap:16px}
 .field{display:flex;flex-direction:column;gap:7px}
@@ -602,6 +624,19 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .field textarea{resize:vertical;min-height:110px}
 .form__row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:560px){.form__row{grid-template-columns:1fr}}
+.form__alt{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+  margin-top:6px;padding-top:16px;border-top:1px solid var(--line);font-size:.92rem;color:var(--slate-2)}
+.form__alt-link{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:var(--brand-dk);transition:gap .2s}
+.form__alt-link:hover{gap:9px}
+/* form success banner (shown after submit) */
+.form-success{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:14px 8px;
+  animation:fadeUpS .5s var(--ease) both}
+.form-success__ic{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;
+  background:var(--grad);box-shadow:var(--sh-glow);margin-bottom:4px}
+.form-success__ic svg{width:30px;height:30px}
+.form-success h3{font-size:1.3rem;line-height:1.2}
+.form-success p{font-size:.97rem;color:var(--slate);max-width:340px}
+.form-success .btn{margin-top:8px}
 
 /* ---------- Footer ---------- */
 .footer{background:var(--bg-dark);color:#9AAAC2;padding:70px 0 104px;position:relative;overflow:hidden}

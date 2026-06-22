@@ -600,7 +600,7 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 @media(max-width:560px){.form__row{grid-template-columns:1fr}}
 
 /* ---------- Footer ---------- */
-.footer{background:var(--bg-dark);color:#9AAAC2;padding:70px 0 30px;position:relative;overflow:hidden}
+.footer{background:var(--bg-dark);color:#9AAAC2;padding:70px 0 104px;position:relative;overflow:hidden}
 .footer .orb--green{width:360px;height:360px;top:-180px;left:10%;opacity:.18}
 .footer__grid{position:relative;z-index:2;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)}
 .footer__brand .brand{color:#fff;margin-bottom:14px}

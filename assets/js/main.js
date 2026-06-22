@@ -5,7 +5,7 @@
 const CONFIG = {
   whatsappNumber: "919999999999", // country code + number, no +, no spaces
   whatsappMessage: "Hi GetXH! I'd like to know how you can help me capture and convert more leads.",
-  email: "sawaisinghbusiness@gmail.com",
+  email: "sales@getxh.in",
 };
 
 /* ---- Wire up all WhatsApp links ([data-wa]) ---- */
@@ -229,3 +229,56 @@ const CONFIG = {
 
 /* ---- Footer year ---- */
 document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
+
+/* ---- Interactive WhatsApp demo (branching, Maya @ Skyline) ---- */
+(function demoChat() {
+  const body = document.getElementById("demoBody");
+  const optsBox = document.getElementById("demoOpts");
+  if (!body || !optsBox) return;
+
+  const intro =
+    '<div class="wa__system">🔒 Messages are end-to-end encrypted</div><div class="bubble bubble--in" style="opacity:1;transform:none">Hi! I\'m Maya, the AI assistant at Skyline Properties 😊 Are you looking to <b>buy</b> or <b>rent</b>?<span class="meta">now</span></div>';
+  const startOpts = [{ t: "Buy", r: "I want to buy" }, { t: "Rent", r: "Looking to rent" }];
+
+  const steps = [
+    { bot: "Great choice! 🏠 What's your budget range?", opts: [{ t: "Under ₹50L", r: "Under ₹50L" }, { t: "₹50L–1Cr", r: "₹50L to 1Cr" }, { t: "₹1Cr+", r: "Above ₹1Cr" }] },
+    { bot: "Perfect. When are you planning to move in?", opts: [{ t: "This month", r: "This month" }, { t: "1–3 months", r: "In 1–3 months" }, { t: "Just exploring", r: "Just exploring" }] },
+    { bot: "I have 3 great matches! 🎉 I've reserved a site visit for you this Saturday at 11 AM — shall I confirm?", opts: [{ t: "Yes, confirm ✅", r: "Yes, please confirm!" }] },
+    { bot: null, tag: "Lead qualified · Visit booked ✅ — 30 seconds, fully automated.", opts: [{ t: "↻ Restart demo", r: "__restart" }] },
+  ];
+
+  function addBubble(side, html) {
+    const b = document.createElement("div");
+    b.className = "bubble bubble--" + side;
+    b.style.opacity = "1"; b.style.transform = "none";
+    b.innerHTML = html + '<span class="meta">' + (side === "out" ? "now <i>✓✓</i>" : "now") + "</span>";
+    body.appendChild(b); body.scrollTop = body.scrollHeight;
+  }
+  function addTyping() {
+    const t = document.createElement("div");
+    t.className = "typing"; t.innerHTML = "<span></span><span></span><span></span>";
+    body.appendChild(t); body.scrollTop = body.scrollHeight; return t;
+  }
+  function setOpts(list) {
+    optsBox.innerHTML = "";
+    list.forEach((o) => { const b = document.createElement("button"); b.textContent = o.t; b.dataset.reply = o.r; optsBox.appendChild(b); });
+  }
+
+  let step = 0;
+  optsBox.addEventListener("click", (e) => {
+    const btn = e.target.closest("button"); if (!btn) return;
+    const reply = btn.dataset.reply;
+    if (reply === "__restart") { body.innerHTML = intro; setOpts(startOpts); step = 0; return; }
+    addBubble("out", reply);
+    optsBox.innerHTML = "";
+    const cur = steps[step];
+    const t = addTyping();
+    setTimeout(() => {
+      t.remove();
+      if (cur.bot) addBubble("in", cur.bot);
+      if (cur.tag) { const d = document.createElement("div"); d.className = "bubble bubble--tag"; d.style.opacity = "1"; d.style.transform = "none"; d.textContent = cur.tag; body.appendChild(d); body.scrollTop = body.scrollHeight; }
+      if (cur.opts) setOpts(cur.opts);
+      step++;
+    }, 1100);
+  });
+})();

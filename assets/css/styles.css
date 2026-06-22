@@ -132,11 +132,11 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .brand__name{font-size:1.06rem}
 .brand__name b{font-weight:850}
 .brand__name span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand__logo{width:44px;height:44px;flex:none;border-radius:12px;
+.brand__logo{width:56px;height:56px;flex:none;border-radius:14px;
   background:#fff url(../logo.jpg?v=2) no-repeat 50% 50%;background-size:165%;
   border:1px solid var(--line);box-shadow:var(--sh-sm)}
 .footer__brand .brand__logo{border-color:rgba(255,255,255,.16)}
-@media(max-width:560px){.brand__logo{width:40px;height:40px}}
+@media(max-width:560px){.brand__logo{width:48px;height:48px}}
 .nav__links{display:flex;gap:6px}
 .nav__links a{
   position:relative;font-size:.93rem;font-weight:550;color:var(--slate);
@@ -247,6 +247,11 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .wa__input .box{flex:1;background:#fff;border-radius:20px;padding:10px 14px;font-size:.8rem;color:#8696a0;display:flex;align-items:center;gap:7px;box-shadow:0 1px .6px rgba(11,20,26,.1)}
 .wa__input .send{width:40px;height:40px;border-radius:50%;background:#00A884;display:grid;place-items:center;color:#fff;flex:none}
 .wa__input .send svg{width:19px;height:19px}
+/* interactive demo reply buttons */
+.demo-input{display:flex;gap:8px;padding:10px 12px;background:#EFE7DE}
+.demo-input .opt{flex:1;display:flex;gap:7px;flex-wrap:wrap}
+.demo-input .opt button{flex:1;width:auto;border:1px solid #cfd8dc;border-radius:18px;background:#fff;color:#075E54;font-size:.8rem;font-weight:650;padding:9px;min-width:84px;cursor:pointer;transition:.2s}
+.demo-input .opt button:hover{background:#f0f7f4;border-color:#9fc7ba}
 
 .floatcard{position:absolute;z-index:4;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);
   border:1px solid var(--line);border-radius:14px;padding:11px 15px;font-size:.83rem;font-weight:650;color:var(--ink);
@@ -394,6 +399,12 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .ba__ic svg{width:13px;height:13px}
 .ba__before .ba__ic{background:#FEE2E2;color:#DC2626}
 .ba__after .ba__ic{background:#D1FAE5;color:#047857}
+.ba__metrics{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.ba__metrics > div{display:flex;flex-direction:column}
+.ba__metrics b{font-size:1.3rem;font-weight:850;letter-spacing:-.02em;line-height:1.05}
+.ba__metrics span{font-size:.75rem;color:var(--slate-2);margin-top:5px;max-width:130px}
+.ba__before .ba__metrics b{color:#DC2626}
+.ba__after .ba__metrics b{color:var(--brand-dk)}
 .ba__arrow{align-self:center;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:#fff;box-shadow:var(--sh-glow)}
 .ba__arrow svg{width:24px;height:24px}
 @media(max-width:820px){.ba{grid-template-columns:1fr}.ba__arrow{transform:rotate(90deg);margin:-6px auto}}
@@ -592,6 +603,13 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .footer__col h4{color:#fff;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
 .footer__col a{display:block;padding:6px 0;font-size:.93rem;color:#9AAAC2;transition:color .2s}
 .footer__col a:hover{color:#fff}
+.footer__contact{display:flex;flex-direction:column;gap:11px;font-size:.92rem}
+.footer__contact a,.footer__contact span{display:flex;align-items:center;gap:9px;color:#9AAAC2}
+.footer__contact a:hover{color:#fff}
+.footer__contact svg{width:16px;height:16px;flex:none;color:var(--brand)}
+.footer__bottom a{color:#8597b3}
+.footer__bottom a:hover{color:#fff}
+.footer__legal{display:flex;gap:18px;flex-wrap:wrap}
 .footer__bottom{position:relative;z-index:2;padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem;color:#6B7D99}
 @media(max-width:780px){.footer__grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.footer__grid{grid-template-columns:1fr}}
@@ -606,6 +624,9 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 .sticky-wa svg{width:20px;height:20px;position:relative;z-index:1}
 .sticky-wa__text{position:relative;z-index:1}
 @media(max-width:560px){.sticky-wa__text{display:none}.sticky-wa{padding:15px}}
+
+/* ---------- Trust note ---------- */
+.trust-note{text-align:center;max-width:680px;margin:38px auto 0;font-size:1.05rem;font-weight:600;color:var(--ink);line-height:1.5}
 
 /* ---------- Reveal animations ---------- */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}

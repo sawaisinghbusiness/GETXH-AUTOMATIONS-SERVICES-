@@ -6,6 +6,9 @@ const CONFIG = {
   whatsappNumber: "919999999999", // country code + number, no +, no spaces
   whatsappMessage: "Hi GetXH! I'd like to know how you can help me capture and convert more leads.",
   email: "sales@getxh.in",
+  // ---- Vapi voice demo (Services page "Talk to Demo AI") ----
+  vapiPublicKey: "b8b89f91-fd21-4a27-aac6-a47748d01092", // Vapi PUBLIC key (safe in browser)
+  vapiAssistantId: "ebe5e1c5-2a67-4339-b8f1-1729b4e1c546", // the demo assistant to call
 };
 
 /* ---- Wire up all WhatsApp links ([data-wa]) ---- */
@@ -280,5 +283,78 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new D
       if (cur.opts) setOpts(cur.opts);
       step++;
     }, 1100);
+  });
+})();
+
+/* ---- Vapi voice demo ("Talk to Demo AI" on Services) ---- */
+(function vapiDemo() {
+  const btn = document.getElementById("vapiDemoBtn");
+  if (!btn) return;
+
+  const label = btn.querySelector(".vapi-btn__label");
+  const note = document.getElementById("vapiDemoNote");
+  const setLabel = (t) => { if (label) label.textContent = t; };
+  const setNote = (t) => { if (note) note.textContent = t; };
+
+  // If keys aren't configured yet, leave a graceful, non-broken button.
+  if (!CONFIG.vapiPublicKey || !CONFIG.vapiAssistantId) {
+    btn.disabled = true;
+    setNote("Live demo coming soon — meanwhile, book a free call to see it in action.");
+    return;
+  }
+
+  let vapi = null;       // the Vapi SDK instance
+  let sdkPromise = null; // cached loader so we only fetch the SDK once
+  let active = false;    // is a call currently running
+
+  // Lazy-load the Vapi Web SDK from CDN on first click.
+  function loadSdk() {
+    if (sdkPromise) return sdkPromise;
+    sdkPromise = import("https://esm.sh/@vapi-ai/web@2.3.8")
+      .then((mod) => (mod && mod.default) || mod)
+      .catch((err) => { sdkPromise = null; throw err; });
+    return sdkPromise;
+  }
+
+  function wireEvents() {
+    vapi.on("call-start", () => {
+      active = true;
+      btn.classList.remove("is-connecting");
+      btn.classList.add("is-active");
+      setLabel("End demo");
+      setNote("You're live with the AI — ask it anything. Tap to end.");
+    });
+    vapi.on("call-end", () => {
+      active = false;
+      btn.classList.remove("is-active", "is-connecting");
+      setLabel("Talk to Demo AI");
+      setNote("Thanks for trying it! Tap to talk again, or book a free call to get your own.");
+    });
+    vapi.on("error", (e) => {
+      console.error("Vapi error:", e);
+      active = false;
+      btn.classList.remove("is-active", "is-connecting");
+      setLabel("Talk to Demo AI");
+      setNote("Couldn't start the demo — check your mic permission and try again.");
+    });
+  }
+
+  btn.addEventListener("click", async () => {
+    // Stop an active call.
+    if (active && vapi) { vapi.stop(); return; }
+
+    btn.classList.add("is-connecting");
+    setLabel("Connecting…");
+    setNote("Starting the demo — please allow microphone access.");
+    try {
+      const Vapi = await loadSdk();
+      if (!vapi) { vapi = new Vapi(CONFIG.vapiPublicKey); wireEvents(); }
+      await vapi.start(CONFIG.vapiAssistantId);
+    } catch (err) {
+      console.error("Vapi start failed:", err);
+      btn.classList.remove("is-connecting");
+      setLabel("Talk to Demo AI");
+      setNote("Couldn't load the demo right now. Please try again, or book a free call.");
+    }
   });
 })();

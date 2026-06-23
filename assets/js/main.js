@@ -3,9 +3,9 @@
    👉 EDIT YOUR CONTACT DETAILS HERE:
    ========================================================= */
 const CONFIG = {
-  whatsappNumber: "919999999999", // country code + number, no +, no spaces
+  whatsappNumber: "918239474289", // country code + number, no +, no spaces
   whatsappMessage: "Hi GetXH! I'd like to know how you can help me capture and convert more leads.",
-  email: "sales@getxh.in",
+  email: "hello@getxhautomation.in",
   // ---- Vapi voice demo (Services page "Talk to Demo AI") ----
   vapiPublicKey: "b8b89f91-fd21-4a27-aac6-a47748d01092", // Vapi PUBLIC key (safe in browser)
   vapiAssistantId: "ebe5e1c5-2a67-4339-b8f1-1729b4e1c546", // the demo assistant to call
@@ -362,3 +362,4 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new D
     }
   });
 })();
+     

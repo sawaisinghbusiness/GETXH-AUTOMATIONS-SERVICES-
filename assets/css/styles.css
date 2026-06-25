@@ -214,6 +214,9 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
   .wa{height:500px}
   .hero h1{font-size:clamp(2rem,8vw,2.6rem)}
 }
+@media(max-width:600px){
+  body{zoom:.65}
+}
 
 /* ---------- Phone / WhatsApp mockup ---------- */
 .hero__visual{position:relative;display:flex;justify-content:center;perspective:1400px}

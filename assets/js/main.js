@@ -206,7 +206,7 @@ const CONFIG = {
   io.observe(body);
 })();
 
-/* ---- Contact form: submit inquiry → confirmation (WhatsApp is a separate, optional path) ---- */
+/* ---- Contact form: submit inquiry → save lead to localStorage + confirmation ---- */
 (function contactForm() {
   const form = document.getElementById("leadForm");
   if (!form) return;
@@ -217,10 +217,41 @@ const CONFIG = {
     e.preventDefault();
     const data = new FormData(form);
     const name = (data.get("name") || "").toString().trim();
+    const phone = (data.get("phone") || "").toString().trim();
+    const business = (data.get("business") || "General").toString().trim();
+    const message = (data.get("message") || "").toString().trim();
     const firstName = name ? name.split(" ")[0] : "";
 
-    // NOTE: wire this up to your backend / Google Sheet / n8n webhook to persist the lead.
-    // For now we confirm to the user that the inquiry is in.
+    // Create lead record
+    const now = new Date();
+    const leadRecord = {
+      id: "lead_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+      name: name || "Anonymous Lead",
+      phone: phone || "Not provided",
+      business: business || "Other",
+      message: message || "No message provided",
+      status: "New",
+      timestamp: now.getTime(),
+      dateFormatted: now.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+
+    // Store in localStorage
+    try {
+      const existingLeads = JSON.parse(localStorage.getItem("getxh_leads") || "[]");
+      existingLeads.unshift(leadRecord);
+      localStorage.setItem("getxh_leads", JSON.stringify(existingLeads));
+
+      // Dispatch custom event so any active admin tab on same page/window catches it immediately
+      window.dispatchEvent(new CustomEvent("getxh_new_lead", { detail: leadRecord }));
+    } catch (err) {
+      console.warn("Could not save lead to localStorage:", err);
+    }
 
     if (success && successTitle) {
       successTitle.textContent = firstName

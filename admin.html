@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Leads Dashboard — GetXH Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700;800;850&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/styles.css?v=55" />
+<style>
+  /* Extra utility styles for admin dashboard */
+  .toast {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: #0A0F1E;
+    color: #fff;
+    border-radius: var(--r-md);
+    padding: 14px 20px;
+    box-shadow: var(--sh-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 999;
+    border: 1px solid rgba(16,185,129,.4);
+    animation: slideIn .3s var(--ease) forwards;
+  }
+  @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .toast-close { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1.2rem; }
+</style>
+</head>
+<body>
+
+<!-- ===== VIEW 1: ADMIN LOGIN GATE ===== -->
+<div id="loginView" class="admin-login-wrap">
+  <div class="admin-login-card reveal in">
+    <div class="brand" style="justify-content:center;margin-bottom:14px">
+      <span class="brand__logo" aria-label="GetXH Automation"></span>
+    </div>
+    <h2>Admin Dashboard</h2>
+    <p>Enter your password to view incoming leads and client inquiries.</p>
+
+    <form id="loginForm" class="form" onsubmit="event.preventDefault(); handleLogin();">
+      <div class="field" style="text-align:left">
+        <label for="adminPass">Admin Password</label>
+        <input id="adminPass" type="password" placeholder="Enter password" required autofocus />
+      </div>
+      <p id="loginErr" style="color:#DC2626;font-size:.85rem;display:none;margin-top:-6px;font-weight:600">Incorrect password. Please try again.</p>
+      <button type="submit" class="btn btn--primary btn--lg btn--block" style="margin-top:6px">Unlock Dashboard →</button>
+      <div style="margin-top:16px;border-top:1px solid var(--line);padding-top:16px">
+        <a href="index.html" style="font-size:.88rem;color:var(--slate-2);font-weight:600">← Back to website</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== VIEW 2: LEADS DASHBOARD ===== -->
+<div id="dashboardView" class="admin-shell" style="display:none">
+  
+  <!-- Header Bar -->
+  <header class="admin-nav">
+    <div class="admin-nav__inner">
+      <div class="admin-nav__brand">
+        <a href="index.html" class="brand" title="View Website">
+          <span class="brand__logo" style="width:36px;height:36px"></span>
+        </a>
+        <span>GetXH Leads Central</span>
+        <span class="admin-nav__badge" title="Automatically updates when a new lead is submitted">Live Sync Active</span>
+      </div>
+
+      <div class="admin-nav__actions">
+        <span id="liveClock" style="font-size:.88rem;color:var(--slate-2);font-weight:600;display:none"></span>
+        <a href="about.html#contact" target="_blank" class="btn btn--ghost btn--sm" title="Open contact form to test">Open Form ↗</a>
+        <button onclick="handleLogout()" class="btn btn--ghost btn--sm" style="color:#DC2626;border-color:#FECACA">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    
+    <!-- Top Summary Banner -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+      <div>
+        <h1 style="font-size:1.7rem">Inquiry Pipeline</h1>
+        <p style="color:var(--slate-2);font-size:.95rem">View, qualify, and follow up with leads in real time.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button onclick="addSampleLead()" class="btn btn--ghost btn--sm" title="Add realistic test lead">+ Sample Lead</button>
+        <button onclick="exportCSV()" class="btn btn--primary btn--sm">📥 Export CSV</button>
+      </div>
+    </div>
+
+    <!-- KPI Metrics -->
+    <div class="admin-stats">
+      <div class="admin-stat-card">
+        <small>Total Inquiries</small>
+        <b id="statTotal">0</b>
+        <span>All time inquiries</span>
+      </div>
+      <div class="admin-stat-card">
+        <small>New / Uncontacted</small>
+        <b id="statNew" style="color:var(--brand-dk)">0</b>
+        <span>Awaiting first reply</span>
+      </div>
+      <div class="admin-stat-card">
+        <small>In Discussion</small>
+        <b id="statContacted" style="color:#1D4ED8">0</b>
+        <span>Contacted / Meeting set</span>
+      </div>
+      <div class="admin-stat-card">
+        <small>Qualified &amp; Won</small>
+        <b id="statQualified" style="color:#B45309">0</b>
+        <span>High intent / Closed</span>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="admin-toolbar">
+      <div class="admin-toolbar__left">
+        <div class="admin-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by name, phone, or keyword…" oninput="renderLeads()" />
+        </div>
+
+        <select id="statusFilter" class="admin-select" onchange="renderLeads()">
+          <option value="ALL">All Statuses</option>
+          <option value="New">Status: New</option>
+          <option value="Contacted">Status: Contacted</option>
+          <option value="Qualified">Status: Qualified</option>
+          <option value="Closed">Status: Closed</option>
+        </select>
+
+        <select id="categoryFilter" class="admin-select" onchange="renderLeads()">
+          <option value="ALL">All Business Types</option>
+          <option value="Real estate">Real estate</option>
+          <option value="Clinic">Clinic</option>
+          <option value="Coaching institute">Coaching institute</option>
+          <option value="Service business">Service business</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="admin-toolbar__right">
+        <button onclick="clearAllLeads()" class="btn btn--ghost btn--sm" style="color:#64748b" title="Clear leads database">Clear All</button>
+      </div>
+    </div>
+
+    <!-- Leads Container -->
+    <div id="leadsList" class="lead-cards">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="admin-empty" style="display:none">
+      <div class="admin-empty-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 9.5h18"/></svg>
+      </div>
+      <h3 style="font-size:1.2rem;margin-bottom:6px">No Inquiries Found</h3>
+      <p id="emptyStateMsg">You don't have any incoming leads yet. Submit the contact form on your website or add a test lead to see it live.</p>
+      <div style="margin-top:18px;display:flex;gap:10px;justify-content:center">
+        <button onclick="addSampleLead()" class="btn btn--primary btn--sm">+ Add Test Lead</button>
+        <a href="about.html#contact" target="_blank" class="btn btn--ghost btn--sm">Go to Contact Form ↗</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== NOTIFICATION TOAST CONTAINER ===== -->
+<div id="toastContainer"></div>
+
+<script>
+/* =========================================================
+   GetXH Admin Leads Dashboard Script
+   ========================================================= */
+const ADMIN_PASSWORD = "DONTFORGET123";
+
+// Check Auth on page load
+function checkAuth() {
+  const isAuth = sessionStorage.getItem("getxh_admin_auth") === "true";
+  if (isAuth) {
+    document.getElementById("loginView").style.display = "none";
+    document.getElementById("dashboardView").style.display = "flex";
+    initDashboard();
+  } else {
+    document.getElementById("loginView").style.display = "grid";
+    document.getElementById("dashboardView").style.display = "none";
+  }
+}
+
+function handleLogin() {
+  const input = document.getElementById("adminPass");
+  const err = document.getElementById("loginErr");
+  if (input.value === ADMIN_PASSWORD) {
+    sessionStorage.setItem("getxh_admin_auth", "true");
+    err.style.display = "none";
+    checkAuth();
+  } else {
+    err.style.display = "block";
+    input.focus();
+  }
+}
+
+function handleLogout() {
+  sessionStorage.removeItem("getxh_admin_auth");
+  checkAuth();
+}
+
+// Storage Helpers
+function getLeads() {
+  try {
+    return JSON.parse(localStorage.getItem("getxh_leads") || "[]");
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveLeads(leads) {
+  localStorage.setItem("getxh_leads", JSON.stringify(leads));
+  updateStats();
+  renderLeads();
+}
+
+// Update KPI Counters
+function updateStats() {
+  const leads = getLeads();
+  document.getElementById("statTotal").textContent = leads.length;
+  document.getElementById("statNew").textContent = leads.filter(l => l.status === "New").length;
+  document.getElementById("statContacted").textContent = leads.filter(l => l.status === "Contacted").length;
+  document.getElementById("statQualified").textContent = leads.filter(l => l.status === "Qualified" || l.status === "Closed").length;
+}
+
+// Render Leads Cards
+function renderLeads() {
+  const leads = getLeads();
+  const search = (document.getElementById("searchInput").value || "").toLowerCase().trim();
+  const statusFilter = document.getElementById("statusFilter").value;
+  const categoryFilter = document.getElementById("categoryFilter").value;
+
+  const container = document.getElementById("leadsList");
+  const empty = document.getElementById("emptyState");
+
+  const filtered = leads.filter(lead => {
+    // Status filter
+    if (statusFilter !== "ALL" && lead.status !== statusFilter) return false;
+    // Category filter
+    if (categoryFilter !== "ALL" && lead.business !== categoryFilter) return false;
+    // Search filter
+    if (search) {
+      const matchName = (lead.name || "").toLowerCase().includes(search);
+      const matchPhone = (lead.phone || "").toLowerCase().includes(search);
+      const matchMsg = (lead.message || "").toLowerCase().includes(search);
+      const matchBiz = (lead.business || "").toLowerCase().includes(search);
+      if (!matchName && !matchPhone && !matchMsg && !matchBiz) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = "";
+    empty.style.display = "block";
+    return;
+  }
+
+  empty.style.display = "none";
+  container.innerHTML = filtered.map(lead => {
+    // Initials
+    const initials = (lead.name || "Lead")
+      .split(" ")
+      .map(n => n[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+
+    // WhatsApp clean link
+    const cleanPhone = (lead.phone || "").replace(/[^0-9]/g, "");
+    const waText = encodeURIComponent(`Hi ${lead.name || ""}! Thanks for your inquiry with GetXH Automation. How can I help you regarding your ${lead.business || "business"} automation?`);
+    const waLink = `https://wa.me/${cleanPhone}?text=${waText}`;
+
+    const statusClass = "status-" + (lead.status || "new").toLowerCase();
+
+    return `
+      <div class="lead-card ${lead.status === 'New' ? 'is-new' : ''}" id="${lead.id}">
+        
+        <!-- Avatar & Basic info -->
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="lead-avatar">${initials}</div>
+          <div class="lead-info">
+            <h4>
+              ${escapeHtml(lead.name)}
+              <span class="lead-badge">${escapeHtml(lead.business || "Other")}</span>
+            </h4>
+            <small>📅 ${lead.dateFormatted || "Recent"} · <b style="color:var(--ink)">${escapeHtml(lead.phone)}</b></small>
+          </div>
+        </div>
+
+        <!-- Message snippet -->
+        <div class="lead-msg">
+          <em>Requirement / Notes:</em>
+          ${escapeHtml(lead.message || "No specific requirement provided.")}
+        </div>
+
+        <!-- Status selector -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <label style="font-size:.78rem;font-weight:700;color:var(--slate-2);text-transform:uppercase">Status:</label>
+          <select class="lead-status-select ${statusClass}" onchange="updateLeadStatus('${lead.id}', this.value)">
+            <option value="New" ${lead.status === 'New' ? 'selected' : ''}>🟢 New</option>
+            <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>🔵 Contacted</option>
+            <option value="Qualified" ${lead.status === 'Qualified' ? 'selected' : ''}>🟡 Qualified</option>
+            <option value="Closed" ${lead.status === 'Closed' ? 'selected' : ''}>🟣 Closed / Won</option>
+          </select>
+        </div>
+
+        <!-- Actions -->
+        <div class="lead-actions">
+          ${cleanPhone ? `
+            <a href="${waLink}" target="_blank" rel="noopener" class="btn-lead-wa" title="Open pre-filled WhatsApp message">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 .9-2.2.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .5l-.3.5-.3.4c-.1.1-.3.3-.1.5.1.3.6 1.1 1.4 1.7 1 .8 1.7 1.1 2 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.3.1.4.2.5.3 0 .1 0 .6-.2 1.2Z"/></svg>
+              WhatsApp
+            </a>
+            <a href="tel:${cleanPhone}" class="btn-lead-call" title="Call directly">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Call
+            </a>
+          ` : ''}
+          <button onclick="deleteLead('${lead.id}')" class="btn-lead-del" title="Delete lead">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+          </button>
+        </div>
+
+      </div>
+    `;
+  }).join("");
+}
+
+function updateLeadStatus(id, newStatus) {
+  const leads = getLeads();
+  const index = leads.findIndex(l => l.id === id);
+  if (index !== -1) {
+    leads[index].status = newStatus;
+    saveLeads(leads);
+  }
+}
+
+function deleteLead(id) {
+  if (confirm("Are you sure you want to delete this lead?")) {
+    let leads = getLeads();
+    leads = leads.filter(l => l.id !== id);
+    saveLeads(leads);
+  }
+}
+
+function clearAllLeads() {
+  if (confirm("Warning: This will clear all stored inquiries. Are you sure?")) {
+    saveLeads([]);
+  }
+}
+
+// Add a realistic test lead
+function addSampleLead() {
+  const samples = [
+    { name: "Vikram Malhotra", phone: "919876543210", business: "Real estate", message: "Need a WhatsApp bot to qualify inquiries from Facebook Ads and book weekend showings automatically." },
+    { name: "Dr. Anjali Sharma", phone: "919811223344", business: "Clinic", message: "Want an AI receptionist to handle patient inquiries on WhatsApp after 7 PM and book appointments." },
+    { name: "Rohan Verma", phone: "919922334455", business: "Coaching institute", message: "Looking to automate course brochure delivery and demo class registrations." }
+  ];
+  const chosen = samples[Math.floor(Math.random() * samples.length)];
+  const now = new Date();
+  const newLead = {
+    id: "lead_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+    name: chosen.name,
+    phone: chosen.phone,
+    business: chosen.business,
+    message: chosen.message,
+    status: "New",
+    timestamp: now.getTime(),
+    dateFormatted: now.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+  };
+
+  const leads = getLeads();
+  leads.unshift(newLead);
+  saveLeads(leads);
+  showToast(`Sample lead added: ${newLead.name}`);
+}
+
+// Export Leads to CSV
+function exportCSV() {
+  const leads = getLeads();
+  if (!leads.length) {
+    alert("No leads to export yet!");
+    return;
+  }
+
+  const headers = ["ID", "Submission Date", "Name", "Phone", "Business Type", "Status", "Message"];
+  const rows = leads.map(l => [
+    `"${l.id}"`,
+    `"${l.dateFormatted || ''}"`,
+    `"${(l.name || '').replace(/"/g, '""')}"`,
+    `"${(l.phone || '').replace(/"/g, '""')}"`,
+    `"${(l.business || '').replace(/"/g, '""')}"`,
+    `"${(l.status || '').replace(/"/g, '""')}"`,
+    `"${(l.message || '').replace(/"/g, '""')}"`
+  ]);
+
+  const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", `getxh_leads_${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Toast notification helper
+function showToast(msg) {
+  const container = document.getElementById("toastContainer");
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerHTML = `
+    <span>🎉 <strong>${escapeHtml(msg)}</strong></span>
+    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 4500);
+}
+
+function escapeHtml(text) {
+  if (!text) return "";
+  return text.toString()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function initDashboard() {
+  updateStats();
+  renderLeads();
+
+  // Listen for storage events across tabs (e.g. user submits on about.html)
+  window.addEventListener("storage", (e) => {
+    if (e.key === "getxh_leads") {
+      updateStats();
+      renderLeads();
+      showToast("New inquiry received in another tab!");
+    }
+  });
+
+  // Listen for local custom events (if within same tab/window)
+  window.addEventListener("getxh_new_lead", (e) => {
+    updateStats();
+    renderLeads();
+    showToast(`New lead from ${e.detail ? e.detail.name : 'website'}!`);
+  });
+}
+
+// Init on load
+checkAuth();
+</script>
+</body>
+</html>

@@ -842,13 +842,3 @@ h3{font-size:1.18rem;letter-spacing:-.02em}
 }
 
 
-
-/* ---------- Business details ---------- */
-.footer__biz{position:relative;z-index:2;padding:28px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:.92rem}
-.footer__biz h4{color:#fff;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
-.footer__biz p{color:#8597b3;margin-bottom:12px}
-.footer__addr{font-style:normal;line-height:1.8;color:#9AAAC2}
-.footer__addr a{color:#9AAAC2}
-.footer__addr a:hover{color:#fff}
-.contact-us__addr{font-style:normal;line-height:1.9;font-size:1.02rem}
-.contact-us__addr a{color:var(--brand-dk);font-weight:600}

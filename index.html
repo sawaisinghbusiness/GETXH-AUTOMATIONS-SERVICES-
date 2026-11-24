@@ -23,9 +23,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700;800;850&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/styles.css?v=50" />
+<link rel="stylesheet" href="assets/css/styles.css?v=20261124" />
 </head>
-<body>
+<body class="page-index">
 
 <!-- ===== NAV ===== -->
 <header class="nav" id="nav">
@@ -33,15 +33,15 @@
     <a href="index.html" class="brand">
       <span class="brand__logo" aria-label="GetXH Automation Services"></span>
     </a>
-    <nav class="nav__links">
+    <nav class="nav__links" id="siteNavigation" aria-label="Main navigation">
       <a href="index.html" class="active">Home</a>
       <a href="services.html">Services</a>
       <a href="case-study.html">Case Study</a>
       <a href="about.html">About</a>
     </nav>
     <div class="nav__right">
-      <a href="about.html#contact" class="btn btn--primary btn--sm">Book a free call</a>
-      <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <a href="about.html#contact" class="btn btn--primary btn--sm">Request a discovery call</a>
+      <button class="nav__burger" aria-label="Menu" aria-controls="siteNavigation" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
@@ -55,14 +55,14 @@
     <div class="grid-bg"></div>
     <div class="container hero__grid">
       <div class="hero__copy reveal">
-        <h1 class="display">Your AI assistant handles every lead in under 5 seconds. <span class="gradient-text brush">Even at 2 AM.<svg class="brush__u" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="bgrad" x1="0" x2="1"><stop offset="0" stop-color="#10B981"/><stop offset=".55" stop-color="#0EA5E9"/><stop offset="1" stop-color="#6366F1"/></linearGradient></defs><path d="M5 11C70 4 150 15 220 8c35-3.5 60 1 73 2"/></svg></span></h1>
-        <p class="lead">We build a custom AI assistant for your business — it replies on WhatsApp, qualifies the lead, and books the visit, automatically.</p>
+        <h1 class="display">Turn WhatsApp enquiries into <span class="gradient-text">booked visits.</span></h1>
+        <p class="lead">GetXH builds WhatsApp assistants that answer property questions, qualify buyers and arrange site visits, even after hours.</p>
         <div class="hero__cta">
           <a href="#demo" class="btn btn--primary btn--lg">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3Z"/></svg>
-            Try the live demo
+            Try the sample chat
           </a>
-          <a href="about.html#contact" class="btn btn--ghost btn--lg">Book a discovery call</a>
+          <a href="about.html#contact" class="btn btn--ghost btn--lg">Request a discovery call</a>
         </div>
       </div>
 
@@ -79,27 +79,14 @@
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
               </div>
             </div>
-            <div class="wa__body" id="waBody"><!-- chat injected by JS --></div>
-            <div class="wa__input">
-              <div class="box">🙂&nbsp; Type a message</div>
-              <div class="send"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5 21 12 3 3.5 3 10l13 2-13 2z"/></svg></div>
-            </div>
+            <div class="wa__body hero-chat" aria-label="Example WhatsApp conversation"><p class="wa__system">Example conversation</p><div class="bubble bubble--out">Is there a 2 BHK in Sector 45?</div><div class="bubble bubble--in">Yes. What budget are you working with?</div><div class="bubble bubble--out">Around ₹85 lakh. Can I visit Saturday?</div><div class="bubble bubble--in">Saturday at 11 am is available. Shall I book it?</div><div class="bubble bubble--out">Yes, please.</div><div class="bubble bubble--tag">Site visit booked · Saturday, 11 am</div></div>
           </div>
-        </div>
-        <div class="success" id="chatSuccess">
-          <div class="success__ring">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>
-          </div>
-          <h3>Lead qualified <span class="gradient-text">in seconds</span></h3>
-          <p>Site visit booked automatically</p>
-          <span class="tagline">
-            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            Zero manual effort
-          </span>
         </div>
       </div>
     </div>
   </section>
+
+  <div class="container"><a class="proof-link" href="case-study.html"><span><strong>Sarvottam</strong><span>Real-estate automation case study</span></span><span>Read case study →</span></a></div>
 
   <!-- ===== PROBLEM ===== -->
   <section class="section section--soft" id="problem">
@@ -150,14 +137,14 @@
   <section class="section" id="demo">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="eyebrow eyebrow--ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3Z"/></svg> See the AI working</span>
+        <span class="eyebrow eyebrow--ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3Z"/></svg> Sample conversation</span>
         <h2>Talk to the assistant <span class="gradient-text">yourself</span></h2>
-        <p class="lead">This is the exact experience your leads get. Tap a reply and watch it qualify the lead and book a visit — in seconds.</p>
+        <p class="lead">Choose a reply to see how a property enquiry could become a booked visit.</p>
       </div>
       <div class="hero__grid" style="align-items:center">
         <div class="reveal">
           <span class="chip" style="display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;padding:6px 13px;border-radius:999px;background:var(--grad-soft);color:var(--brand-dk);border:1px solid rgba(16,185,129,.2);margin-bottom:16px"><span class="pulse" style="width:8px;height:8px;border-radius:50%;background:var(--brand)"></span> Interactive · click the replies</span>
-          <h3 style="font-size:1.5rem;margin-bottom:12px">No screenshots. A real, working assistant.</h3>
+          <h3 style="font-size:1.5rem;margin-bottom:12px">From first question to site visit</h3>
           <ul class="flist" style="margin-top:18px">
             <li><span class="flist__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Instant, human-sounding replies</div></li>
             <li><span class="flist__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div>Asks budget, type &amp; timeline on its own</div></li>
@@ -178,7 +165,7 @@
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"/></svg>
                 </div>
               </div>
-              <div class="wa__body" id="demoBody">
+              <div class="wa__body" id="demoBody" role="log" aria-live="polite">
                 <div class="wa__system">🔒 Messages are end-to-end encrypted</div>
                 <div class="bubble bubble--in" style="opacity:1;transform:none">Hi! I'm Maya, the AI assistant at Skyline Properties 😊 Are you looking to <b>buy</b> or <b>rent</b>?<span class="meta">now</span></div>
               </div>
@@ -449,6 +436,6 @@ Udyam Registration No: UDYAM-RJ-05-0083918</address>
   <span class="sticky-wa__text">WhatsApp us</span>
 </a>
 
-<script src="assets/js/main.js?v=2"></script>
+<script src="assets/js/main.js?v=20261124"></script>
 </body>
 </html>

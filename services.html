@@ -23,22 +23,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700;800;850&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/styles.css?v=52" />
+<link rel="stylesheet" href="assets/css/styles.css?v=20261124" />
 </head>
-<body>
+<body class="page-services">
 
 <header class="nav" id="nav">
   <div class="nav__inner">
     <a href="index.html" class="brand"><span class="brand__logo" aria-label="GetXH Automation Services"></span></a>
-    <nav class="nav__links">
+    <nav class="nav__links" id="siteNavigation" aria-label="Main navigation">
       <a href="index.html">Home</a>
       <a href="services.html" class="active">Services</a>
       <a href="case-study.html">Case Study</a>
       <a href="about.html">About</a>
     </nav>
     <div class="nav__right">
-      <a href="about.html#contact" class="btn btn--primary btn--sm">Book a free call</a>
-      <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <a href="about.html#contact" class="btn btn--primary btn--sm">Request a discovery call</a>
+      <button class="nav__burger" aria-label="Menu" aria-controls="siteNavigation" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
@@ -53,7 +53,7 @@
       <h1 class="display">Everything you need to <span class="gradient-text">convert </span><span class="gradient-text brush">more leads<svg class="brush__u" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="bgrad" x1="0" x2="1"><stop offset="0" stop-color="#10B981"/><stop offset=".55" stop-color="#0EA5E9"/><stop offset="1" stop-color="#6366F1"/></linearGradient></defs><path d="M5 11C70 4 150 15 220 8c35-3.5 60 1 73 2"/></svg></span></h1>
       <p class="lead" style="color:#334155;font-weight:450">Five connected services that work as one system — capturing every enquiry, qualifying the serious buyers, and booking them in. <b style="color:var(--ink);font-weight:650">You stay focused on closing.</b></p>
       <div class="hero__cta" style="justify-content:center;margin-top:28px">
-        <a href="#demo" class="btn btn--primary btn--lg">🎙 Talk to our Demo AI</a>
+        <a href="#demo" class="btn btn--primary btn--lg">Try the voice demo</a>
         <a href="#offers" class="btn btn--ghost btn--lg">See packages</a>
       </div>
     </div>
@@ -136,7 +136,7 @@
           </span>
           <span class="vapi-btn__label">Talk to Demo AI</span>
         </button>
-        <p class="cta__fine" id="vapiDemoNote" style="margin-top:14px;color:var(--slate-2)">Works in your browser · needs mic access · ~30-second demo</p>
+        <p class="cta__fine" id="vapiDemoNote" role="status" style="margin-top:14px;color:var(--slate-2)">Works in your browser · needs mic access · ~30-second demo</p>
       </div>
     </div>
   </section>
@@ -245,7 +245,7 @@
       <div class="sec-head reveal">
         <span class="eyebrow">Packages</span>
         <h2>Pick the setup that fits your stage</h2>
-        <p class="lead">Every system is custom-built and priced to your business — not a one-size template. Book a free call and we'll scope the simplest setup that gets you results, then share clear pricing.</p>
+        <p class="lead">Every system is custom-built and priced to your business — not a one-size template. Request a discovery call and we'll scope the simplest setup that gets you results, then share clear pricing.</p>
       </div>
       <div class="grid g-3">
         <div class="offer reveal">
@@ -258,10 +258,9 @@
             <li>Lead capture</li>
             <li>Hot-lead hand-off to you</li>
           </ul>
-          <a href="#" class="btn btn--ghost btn--block" data-wa>Book a free call</a>
+          <a href="#" class="btn btn--ghost btn--block" data-wa data-package="Starter">Ask about Starter on WhatsApp</a>
         </div>
         <div class="offer offer--featured reveal" data-delay="1">
-          <span class="offer__tag">Most popular</span>
           <h3>Growth</h3>
           <p class="offer__sub">The complete lead engine</p>
           <p class="offer__price-note">Tailored to your lead volume</p>
@@ -272,7 +271,7 @@
             <li>Lead qualification</li>
             <li>Appointment booking</li>
           </ul>
-          <a href="#" class="btn btn--wa btn--block" data-wa>Book a free call</a>
+          <a href="#" class="btn btn--wa btn--block" data-wa data-package="Growth">Ask about Growth on WhatsApp</a>
         </div>
         <div class="offer reveal" data-delay="2">
           <h3>Custom</h3>
@@ -285,7 +284,7 @@
             <li>Custom workflows &amp; reporting</li>
             <li>Priority support</li>
           </ul>
-          <a href="#" class="btn btn--ghost btn--block" data-wa>Talk to us</a>
+          <a href="#" class="btn btn--ghost btn--block" data-wa data-package="Custom">Ask about Custom on WhatsApp</a>
         </div>
       </div>
       <p class="cta__fine" style="text-align:center;margin-top:24px;color:var(--slate-2)">One-time setup + simple monthly support — no lock-ins, no surprises. We share exact pricing on your free call, once we understand your lead flow.</p>
@@ -337,10 +336,10 @@
         <div class="orb orb--green"></div><div class="orb orb--indigo"></div>
         <div class="cta__in">
           <h2>Not sure what you need? We'll tell you honestly.</h2>
-          <p>Book a free call. We'll map your current lead flow and recommend the simplest system to convert more — even if that's just one service.</p>
+          <p>Request a discovery call. We'll map your current lead flow and recommend the simplest system to convert more — even if that's just one service.</p>
           <div class="cta__btns">
             <a href="#" class="btn btn--wa btn--lg" data-wa>Chat on WhatsApp</a>
-            <a href="about.html#contact" class="btn btn--light btn--lg">Book a discovery call</a>
+            <a href="about.html#contact" class="btn btn--light btn--lg">Request a discovery call</a>
           </div>
         </div>
       </div>
@@ -387,6 +386,6 @@ Udyam Registration No: UDYAM-RJ-05-0083918</address>
   <span class="sticky-wa__text">WhatsApp us</span>
 </a>
 
-<script src="assets/js/main.js?v=3"></script>
+<script src="assets/js/main.js?v=20261124"></script>
 </body>
 </html>

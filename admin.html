@@ -4,10 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Admin Leads Dashboard — GetXH Automation</title>
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700;800;850&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/styles.css?v=55" />
+<link rel="stylesheet" href="assets/css/styles.css?v=20261124" />
 <style>
   /* Extra utility styles for admin dashboard */
   .toast {
@@ -30,7 +31,7 @@
   .toast-close { background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1.2rem; }
 </style>
 </head>
-<body>
+<body class="page-admin">
 
 <!-- ===== VIEW 1: ADMIN LOGIN GATE ===== -->
 <div id="loginView" class="admin-login-wrap">
@@ -39,7 +40,7 @@
       <span class="brand__logo" aria-label="GetXH Automation"></span>
     </div>
     <h2>Admin Dashboard</h2>
-    <p>Enter your password to view incoming leads and client inquiries.</p>
+    <p>View trial inquiries saved in this browser.</p>
 
     <form id="loginForm" class="form" onsubmit="event.preventDefault(); handleLogin();">
       <div class="field" style="text-align:left">
@@ -66,7 +67,7 @@
           <span class="brand__logo" style="width:36px;height:36px"></span>
         </a>
         <span>GetXH Leads Central</span>
-        <span class="admin-nav__badge" title="Automatically updates when a new lead is submitted">Live Sync Active</span>
+        <span class="admin-nav__badge" title="Records are stored in this browser">Browser records</span>
       </div>
 
       <div class="admin-nav__actions">

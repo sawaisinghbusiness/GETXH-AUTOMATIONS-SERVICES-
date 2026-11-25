@@ -900,3 +900,45 @@ section[id],h2[id],form[id]{scroll-margin-top:104px}
 }
 .page-index .hero .wa{height:auto;min-height:390px}
 .hero-chat .bubble--tag{margin-top:8px}
+
+/* =========================================================
+   Nov 2026 — industry-neutral homepage + UK Lettings page
+   ========================================================= */
+.page-index .hero .display{max-width:17ch}
+.g-stack{grid-template-columns:repeat(2,1fr)}
+@media(max-width:700px){.g-stack{grid-template-columns:1fr}}
+
+/* UK Lettings page */
+.hero__fine{font-size:.9rem;font-weight:600;color:var(--slate-2);margin-top:6px}
+.page-uk .page-hero__in{max-width:820px}
+.page-uk .page-hero .hero__cta{justify-content:center;margin:28px 0 14px}
+.page-uk .page-hero h1{font-size:clamp(2rem,4.6vw,3.4rem);text-wrap:balance}
+.stat-note{text-align:center;color:var(--slate-2);font-size:.85rem;margin:26px auto 0;max-width:640px}
+.jstep__node b{font-size:1.25rem;font-weight:850;letter-spacing:-.02em}
+.page-uk .wa{height:auto;min-height:420px}
+.page-uk .phone{transform:none}
+.page-uk .showcase__visual .wa__body{min-height:300px}
+.bubble__photo{display:flex;align-items:center;gap:8px;min-width:150px;padding:18px 12px;margin-bottom:4px;border-radius:6px;font-size:.74rem;color:#54656f;
+  background:linear-gradient(135deg,#d9e4e8,#c3d2d8)}
+.bubble__photo svg{width:22px;height:22px;flex:none}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.chip-pill{display:inline-flex;align-items:center;padding:10px 18px;border-radius:999px;background:#fff;border:1px solid var(--line);
+  box-shadow:var(--sh-sm);font-weight:650;font-size:.93rem;color:var(--ink)}
+.guarantee{display:flex;align-items:center;gap:20px;max-width:860px;margin:0 auto;padding:26px 30px;border-radius:var(--r-xl);
+  background:linear-gradient(150deg,#0e6b58,#075E54);color:#d4ede5;box-shadow:0 30px 60px -28px rgba(7,94,84,.75)}
+.guarantee__ic{flex:none;width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:#25D366;color:#fff}
+.guarantee__ic svg{width:28px;height:28px}
+.guarantee p{font-size:1.1rem;font-weight:600;color:#fff;line-height:1.5}
+.founder{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;margin-top:22px;padding:28px 30px}
+.founder .member__photo{margin:0;width:112px;height:112px}
+.founder h3{margin-bottom:6px}
+.founder__links{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:4px}
+.offer .btn{margin-top:4px}
+@media(max-width:600px){
+  .guarantee{flex-direction:column;text-align:center;padding:24px 20px}
+  .founder{grid-template-columns:1fr;text-align:center;justify-items:center;padding:24px 20px}
+  .founder__links{justify-content:center}
+}
+
+/* FAQ: anchor the "+" marker to the summary row (it was drifting to the page edge) */
+.faq__item summary{position:relative}

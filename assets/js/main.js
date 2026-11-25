@@ -41,7 +41,7 @@ function whatsappLink(message) {
   const isSet = (v) => v && !/^[A-Z0-9_]+$/.test(v); // still "BOOKING_URL" etc. = not filled in yet
   const external = (el, url) => { el.href = url; el.target = "_blank"; el.rel = "noopener"; };
   document.querySelectorAll("[data-booking]").forEach((el) => { if (isSet(CONFIG.bookingUrl)) external(el, CONFIG.bookingUrl); });
-  document.querySelectorAll("[data-loom]").forEach((el) => { if (isSet(CONFIG.loomUrl)) external(el, CONFIG.loomUrl); });
+  document.querySelectorAll("[data-loom]").forEach((el) => { if (isSet(CONFIG.loomUrl)) external(el, CONFIG.loomUrl); else el.textContent = "See how it works"; });
   document.querySelectorAll("[data-loom-intro]").forEach((el) => {
     if (isSet(CONFIG.loomIntroUrl)) external(el, CONFIG.loomIntroUrl); else el.hidden = true;
   });
@@ -90,46 +90,31 @@ function whatsappLink(message) {
         }
       });
     },
-    { threshold: 0.14, rootMargin: "0px 0px -40px 0px" }
+    { threshold: 0.01, rootMargin: "0px 0px -40px 0px" }
   );
+  document.documentElement.classList.add("motion-ready");
   els.forEach((el) => io.observe(el));
 })();
 
-/* ---- Prepare a contact message for WhatsApp ---- */
-(function contactForm() {
+(function enquiries() {
   const form = document.getElementById("leadForm");
   if (!form) return;
-  const phone = form.elements.phone;
-  const link = document.getElementById("contactMessage");
   const status = document.getElementById("contactStatus");
-
-  form.addEventListener("input", () => {
-    phone.setCustomValidity("");
-    link.hidden = true;
-    link.removeAttribute("href");
-    status.textContent = "";
-  });
-  form.addEventListener("submit", (event) => {
+  const button = form.querySelector('[type="submit"]');
+  const plan = new URLSearchParams(location.search).get("plan") || "";
+  if (plan) form.elements.message.value = "I'm interested in the " + plan + ".";
+  form.addEventListener("submit", async event => {
     event.preventDefault();
-    const data = new FormData(form);
-    const number = String(data.get("phone")).trim();
-    const digits = number.replace(/\D/g, "");
-    if (!/^\+?[\d(). -]+$/.test(number) || digits.length < 8 || digits.length > 15) {
-      phone.setCustomValidity("Enter a phone number with 8 to 15 digits.");
-      phone.reportValidity();
-      return;
-    }
-    const details = [
-      "Hi GetXH! I’d like to discuss automation.",
-      "Name: " + String(data.get("name")).trim(),
-      "Phone: " + number,
-      "Business: " + data.get("business"),
-      String(data.get("message")).trim(),
-    ].filter(Boolean);
-    link.href = whatsappLink(details.join("\n"));
-    link.hidden = false;
-    status.textContent = "Message ready. Open WhatsApp to review and send it.";
-    link.focus();
+    if (button.disabled) return;
+    button.disabled = true;
+    status.textContent = "Sending enquiry?";
+    try {
+      const res = await fetch("https://backend-for-getxh-automation.onrender.com/api/enquiries", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({...Object.fromEntries(new FormData(form)),plan})});
+      if (!res.ok) throw new Error(res.status === 400 ? "Check your name and phone number." : "Could not send. Please try again.");
+      form.reset();
+      status.textContent = "Enquiry received. Our team will contact you.";
+    } catch (error) {status.textContent = error.message;}
+    finally {button.disabled = false;}
   });
 })();
 
@@ -142,14 +127,14 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new D
   const optsBox = document.getElementById("demoOpts");
   if (!body || !optsBox) return;
 
-  const intro =
-    '<div class="wa__system">🔒 Messages are end-to-end encrypted</div><div class="bubble bubble--in" style="opacity:1;transform:none">Hi! I\'m Maya, the AI assistant at Skyline Properties 😊 Are you looking to <b>buy</b> or <b>rent</b>?<span class="meta">now</span></div>';
+  const intro = body.innerHTML;
+  const fields = document.querySelectorAll("[data-enquiry-field]");
   const startOpts = [{ t: "Buy", r: "I want to buy" }, { t: "Rent", r: "Looking to rent" }];
 
   const steps = [
-    { bot: "Great choice! 🏠 What's your budget range?", opts: [{ t: "Under ₹50L", r: "Under ₹50L" }, { t: "₹50L–1Cr", r: "₹50L to 1Cr" }, { t: "₹1Cr+", r: "Above ₹1Cr" }] },
+    { bot: "What's your purchase budget?", opts: [{ t: "Under ₹50L", r: "Under ₹50L" }, { t: "₹50L–1Cr", r: "₹50L to 1Cr" }, { t: "₹1Cr+", r: "Above ₹1Cr" }] },
     { bot: "Perfect. When are you planning to move in?", opts: [{ t: "This month", r: "This month" }, { t: "1–3 months", r: "In 1–3 months" }, { t: "Just exploring", r: "Just exploring" }] },
-    { bot: "I have 3 great matches! 🎉 I've reserved a site visit for you this Saturday at 11 AM — shall I confirm?", opts: [{ t: "Yes, confirm ✅", r: "Yes, please confirm!" }] },
+    { bot: "Would you like a site visit this Saturday at 11 AM?", opts: [{ t: "Yes, confirm ✅", r: "Yes, please confirm!" }] },
     { bot: null, tag: "Sample complete · Site visit confirmed", opts: [{ t: "↻ Restart demo", r: "__restart" }] },
   ];
 
@@ -176,8 +161,9 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new D
   optsBox.addEventListener("click", (e) => {
     const btn = e.target.closest("button"); if (!btn) return;
     const reply = btn.dataset.reply;
-    if (reply === "__restart") { body.innerHTML = intro; setOpts(startOpts); step = 0; return; }
+    if (reply === "__restart") { body.innerHTML = intro; setOpts(startOpts); fields.forEach(field => field.textContent = "\u2014"); step = 0; optsBox.querySelector("button").focus({ preventScroll: true }); return; }
     if (!step) renting = reply === "Looking to rent";
+    if (fields[step]) fields[step].textContent = [renting ? "Rent" : "Buy", btn.textContent, btn.textContent, "Saturday, 11 AM"][step];
     addBubble("out", reply);
     optsBox.innerHTML = "";
     const cur = renting && !step
@@ -275,3 +261,19 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new D
   });
 })();
      
+
+/* ---- Homepage workflow preview ---- */
+(function workflowPreview() {
+  const preview = document.getElementById("workflow-preview");
+  if (!preview) return;
+  const buttons = Array.from(preview.querySelectorAll("button[aria-controls]"));
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((option) => {
+        const selected = option === button;
+        option.setAttribute("aria-pressed", String(selected));
+        document.getElementById(option.getAttribute("aria-controls")).hidden = !selected;
+      });
+    });
+  });
+})();

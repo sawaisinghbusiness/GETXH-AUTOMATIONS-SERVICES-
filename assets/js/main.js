@@ -6,6 +6,12 @@ const CONFIG = {
   whatsappNumber: "918239474289", // country code + number, no +, no spaces
   whatsappMessage: "Hi GetXH! I'd like to know how you can help me capture and convert more leads.",
   email: "hello@getxhautomation.in",
+  // ---- PLACEHOLDERS — replace these three values with real links ----
+  // While a value is still the placeholder, buttons fall back to a safe default
+  // (booking → the contact form, demo video → "How it works", intro video → hidden).
+  bookingUrl: "BOOKING_URL",       // calendar link for "Book a 15-min call" buttons
+  loomUrl: "LOOM_URL",             // 90-second demo video (UK Lettings page)
+  loomIntroUrl: "LOOM_INTRO_URL",  // short founder intro video (UK Lettings page)
   // ---- Vapi voice demo (Services page "Talk to Demo AI") ----
   vapiPublicKey: "b8b89f91-fd21-4a27-aac6-a47748d01092", // Vapi PUBLIC key (safe in browser)
   vapiAssistantId: "ebe5e1c5-2a67-4339-b8f1-1729b4e1c546", // the demo assistant to call
@@ -27,6 +33,17 @@ function whatsappLink(message) {
   });
   document.querySelectorAll("[data-email]").forEach((el) => {
     el.href = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent("Discovery Call Request — GetXH");
+  });
+})();
+
+/* ---- Booking / video links ([data-booking], [data-loom], [data-loom-intro]) ---- */
+(function wireLinks() {
+  const isSet = (v) => v && !/^[A-Z0-9_]+$/.test(v); // still "BOOKING_URL" etc. = not filled in yet
+  const external = (el, url) => { el.href = url; el.target = "_blank"; el.rel = "noopener"; };
+  document.querySelectorAll("[data-booking]").forEach((el) => { if (isSet(CONFIG.bookingUrl)) external(el, CONFIG.bookingUrl); });
+  document.querySelectorAll("[data-loom]").forEach((el) => { if (isSet(CONFIG.loomUrl)) external(el, CONFIG.loomUrl); });
+  document.querySelectorAll("[data-loom-intro]").forEach((el) => {
+    if (isSet(CONFIG.loomIntroUrl)) external(el, CONFIG.loomIntroUrl); else el.hidden = true;
   });
 })();
 

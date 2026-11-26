@@ -242,3 +242,13 @@ h2,.sec-head h2,#demo h2{font-size:clamp(2.35rem,4.2vw,4.3rem)}
  .foot-enquiry .form {padding:16px}
  input,select,textarea {font-size:16px}
 }
+
+.enquiry-next {display:none}
+@media(min-width:850px){
+ .enquiry-layout {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:clamp(32px,6vw,96px);align-items:center;margin:12px 0 28px}
+ .foot-enquiry .enquiry-layout .form {margin:0;max-width:none}
+ .enquiry-next {display:grid;gap:24px}
+ .enquiry-next img {width:100%;aspect-ratio:2.25;object-fit:cover;border-radius:10px}
+ .enquiry-next h2 {margin:0 0 8px;color:#f2f3ed;font:400 clamp(2rem,3vw,3.5rem)/1.08 Georgia,serif}
+ .enquiry-next p {max-width:44ch;margin:0;color:#c4c9bd;line-height:1.55}
+}

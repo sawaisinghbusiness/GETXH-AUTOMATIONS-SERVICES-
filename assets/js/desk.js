@@ -12,6 +12,7 @@ function signIn() {
   el('search').value = '';
   el('filter').selectedIndex = 0;
   el('inbox').hidden = true;
+  el('postForm').reset(); el('postForm').hidden=true; el('postLibrary').replaceChildren(); el('postSearch').value=''; selectDesk(false);
   el('login').hidden = false;
   authStep(false);
 }
@@ -135,23 +136,68 @@ document.addEventListener('pointermove', event => {
   style.setProperty('--drift-y', ((event.clientY / innerHeight - 0.5) * 12) + 'px');
 }, {passive:true});
 
-let pendingPostId;
-el('postForm').onsubmit = async event => {
+
+let posts = [], editingId;
+function selectDesk(blog) {
+  el('tabInbox').setAttribute('aria-pressed',String(!blog));
+  el('tabBlog').setAttribute('aria-pressed',String(blog));
+  el('blogWorkspace').hidden=!blog;
+  el('enquiryWorkspace').hidden=blog;
+  el('deskTitle').textContent=blog?'Blog posts':'Enquiry inbox';
+  el('refresh').onclick=blog?loadPosts:load;
+}
+function displayPosts(){
+  const filter=el('postSearch').value.trim().toLowerCase();
+  const list=el('postLibrary');
+  list.replaceChildren();
+  for(const post of posts.filter(p=>(p.title+' '+p.category).toLowerCase().includes(filter))){
+    const row=node('article','','post-row');
+    const info=node('div','');
+    info.append(node('strong',post.title),node('small',[post.category,post.status==='draft'?'Draft':'Published'].filter(Boolean).join(' ï¿½ '),'meta'));
+    const edit=node('button','Edit');
+    edit.onclick=async()=>{try{const record=await request('admin/blog?id='+encodeURIComponent(post.id));if(session && !el('blogWorkspace').hidden)openEditor(record);}catch(e){notify(e.message)}};
+    const actions=node('div','','post-actions');
+    const remove=node('button','Delete');
+    remove.onclick=async()=>{
+      if(!confirm('Permanently delete '+post.title+'?'))return;
+      try{await request('admin/blog/delete',{id:post.id});await loadPosts();notify('Post deleted.');}catch(e){notify(e.message)}
+    };
+    actions.append(edit,remove);row.append(info,actions);list.append(row);
+  }
+  if(!list.children.length) list.append(node('p',filter?'No matching posts.':'Your saved posts will appear here.'));
+}
+async function loadPosts(){
+  const current=session;
+  try{const records=await request('admin/blog');if(!current || session!==current || el('blogWorkspace').hidden)return;posts=records;displayPosts();notify('');}
+  catch(e){notify(e.message);}
+}
+function openEditor(post={}){
+  const form=el('postForm');
+  editingId=post.id || crypto.randomUUID();
+  for(const field of ['title','category','cover','excerpt','body']) form.elements[field].value=post[field]||'';
+  el('editorHeading').textContent=post.id?'Edit post':'New post';
+  form.hidden=false;form.elements.title.focus();
+}
+el('tabBlog').onclick=()=>{selectDesk(true);loadPosts()};
+el('tabInbox').onclick=()=>{selectDesk(false);load()};
+el('newPost').onclick=()=>openEditor();
+el('cancelPost').onclick=()=>{el('postForm').hidden=true};
+el('postSearch').oninput=displayPosts;
+el('postForm').onsubmit=async event=>{
   event.preventDefault();
-  const form = event.currentTarget;
-  const button = form.querySelector('button');
-  if (button.disabled) return;
-  button.disabled = true;
-  const feedback = el('postFeedback');
-  feedback.textContent = 'Publishing…';
-  try {
-    pendingPostId ||= crypto.randomUUID();
-    const post = await request('admin/blog', {id:pendingPostId, ...Object.fromEntries(new FormData(form))});
-    pendingPostId = null;
-    form.reset();
-    const link = node('a','Open published article');
-    link.href = 'blog.html?id=' + encodeURIComponent(post.id);
-    feedback.replaceChildren(link);
-  } catch(error) { feedback.textContent = error.message; }
-  finally { button.disabled = false; }
+  const form=event.currentTarget;
+  if(form.getAttribute('aria-busy')==='true')return;
+  form.setAttribute('aria-busy','true');
+  const status=event.submitter?.value||'draft';
+  try{
+    await request('admin/blog',{...Object.fromEntries(new FormData(form)),id:editingId,status});
+    form.hidden=true;await loadPosts();notify(status==='draft'?'Draft saved.':'Article published.');
+  }catch(e){notify(e.message)}finally{form.removeAttribute('aria-busy')}
 };
+
+function refreshPreview(){
+ const form=el('postForm');
+ el('articlePreview').replaceChildren(node('h2',form.elements.title.value),articleBody(form.elements.body.value));
+}
+el('preview').ontoggle=refreshPreview;
+el('postForm').addEventListener('input',()=>{if(el('preview').open)refreshPreview()});

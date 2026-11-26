@@ -1,4 +1,11 @@
-﻿const articles = document.getElementById('articles');
+function coverImage(post) {
+  if (!post.cover || !/^https:\/\//i.test(post.cover)) return null;
+  const img=document.createElement('img');
+  img.src=post.cover;img.alt='';img.loading='lazy';img.className='journal-cover';
+  img.addEventListener('error',()=>img.remove(),{once:true});
+  return img;
+}
+const articles = document.getElementById('articles');
 const element = (tag,text) => {
   const item = document.createElement(tag);
   item.textContent = text;
@@ -16,21 +23,33 @@ async function showArticles() {
     if(id) {
       document.title = data.title+' | GetXH Automation';
       document.getElementById('journalTitle').textContent = data.title;
-      const body = element('div',data.body);
+      document.getElementById('allPosts').hidden=true; const body=articleBody(data.body);
       body.className = 'article-text';
-      articles.append(element('time',date(data.published_at)),body);
+      const image=coverImage(data); if(image) articles.append(image);
+      articles.append(element('time',[data.category,date(data.published_at)].filter(Boolean).join(' · ')),body);
       return;
     }
     if (!data.length) articles.textContent = 'No articles published yet.';
-    for(const post of data) {
+    if (!data.length) return;
+    const label=element('label','Search articles');
+    const search=document.createElement('input');
+    search.type='search';label.append(search);articles.append(label);
+    const results=document.createElement('div');results.className='blog-grid';articles.append(results);
+    function render(){
+    results.replaceChildren();
+    const query=search.value.toLowerCase().trim();
+    for(const post of data.filter(p=>[p.title,p.category,p.excerpt].join(' ').toLowerCase().includes(query))) {
       const row = document.createElement('article');
-      const heading = document.createElement('h2');
+      row.className='blog-card'; const heading = document.createElement('h2');
       const link = element('a',post.title);
       link.href = 'blog.html?id='+encodeURIComponent(post.id);
       heading.append(link);
-      row.append(element('time',date(post.published_at)),heading,element('p',post.excerpt));
-      articles.append(row);
+      const img=coverImage(post); if(img)row.append(img);
+      row.append(element('time',[post.category,date(post.published_at)].filter(Boolean).join(' · ')),heading,element('p',post.excerpt));
+      results.append(row);
     }
+    if(!results.children.length) results.textContent='No matching articles.';
+    } search.oninput=render;render();
   } catch(error) { articles.textContent = error.message; }
 }
 showArticles();

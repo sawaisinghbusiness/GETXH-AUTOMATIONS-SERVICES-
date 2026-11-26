@@ -3,11 +3,21 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src https://backend-for-getxh-automation.onrender.com; base-uri 'none'; form-action 'none'">
-<title>Admin | GetXH Automation</title><link rel="stylesheet" href="assets/css/desk.css"><script defer src="assets/js/desk.js"></script></head>
+<title>Admin | GetXH Automation</title><link rel="stylesheet" href="assets/css/desk.css"><script defer src="assets/js/article-body.js"></script><script defer src="assets/js/desk.js"></script></head>
 <body><header><a class="brand" href="index.html"><img src="assets/logo.jpg" alt="">GetXH Automation</a><span>Administration</span></header>
 <main><section id="login">
 <form id="signin"><h1 id="title">Admin sign in</h1><p id="hint" hidden></p><label for="credential" id="caption">Password</label><input id="credential" type="password" required autocomplete="current-password" aria-describedby="hint state">
 <button class="primary" id="submit">Continue</button><button type="button" id="restart" hidden>Back to password</button></form></section>
-<section id="inbox" hidden><div class="heading"><h1>Enquiry inbox</h1><div><button id="refresh">Refresh</button> <button id="logout">Sign out</button></div></div>
-<details class="blog-editor"><summary>Publish a blog post</summary><form id="postForm"><label>Title<input name="title" required maxlength="160"></label><label>Article<textarea name="body" required maxlength="60000" rows="10"></textarea></label><button class="primary" type="submit">Publish post</button><p id="postFeedback" role="status"></p></form></details><div class="tools"><label>Search enquiries<input type="search" id="search" placeholder="Name, business or phone"></label><label>Status<select id="filter"><option>All statuses</option><option>New</option><option>Contacted</option><option>Closed</option></select></label></div>
-<p id="count"></p><div id="list"></div></section><p id="state" role="status"></p></main></body></html>
+<section id="inbox" hidden><nav class="desk-nav" aria-label="Workspace"><button id="tabInbox" aria-pressed="true">Enquiries</button><button id="tabBlog" aria-pressed="false">All posts</button><a href="blog.html">View live blog</a></nav><div class="heading"><h1 id="deskTitle">Enquiry inbox</h1><div><button id="refresh">Refresh</button> <button id="logout">Sign out</button></div></div>
+<section id="blogWorkspace" hidden>
+<div class="tools"><label>Search posts<input type="search" id="postSearch" placeholder="Title or category"></label><button id="newPost" class="primary">New post</button></div>
+<div id="postLibrary"></div>
+<form id="postForm" hidden><h2 id="editorHeading">New post</h2>
+<label>Post title<input name="title" required maxlength="160"></label>
+<label>Category<input name="category" maxlength="60"></label>
+<label>Short summary<textarea name="excerpt" maxlength="300" rows="2"></textarea></label>
+<label>Cover image URL<input type="url" name="cover" pattern="https://.+" placeholder="https://" maxlength="2048"></label>
+<label>Article<textarea name="body" required maxlength="60000" rows="12"></textarea></label>
+<details id="preview"><summary>Preview article</summary><div id="articlePreview"></div></details><button type="submit" value="draft">Save draft</button> <button type="submit" value="published" class="primary">Publish</button>
+<button type="button" id="cancelPost">Close editor</button></form></section><section id="enquiryWorkspace"><div class="tools"><label>Search enquiries<input type="search" id="search" placeholder="Name, business or phone"></label><label>Status<select id="filter"><option>All statuses</option><option>New</option><option>Contacted</option><option>Closed</option></select></label></div>
+<p id="count"></p><div id="list"></div></section></section><p id="state" role="status"></p></main></body></html>

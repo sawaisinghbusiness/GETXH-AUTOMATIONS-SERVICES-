@@ -42,7 +42,7 @@ async function showArticles() {
       const row = document.createElement('article');
       row.className='blog-card'; const heading = document.createElement('h2');
       const link = element('a',post.title);
-      link.href = 'blog.html?id='+encodeURIComponent(post.id);
+      link.href = '/blog/?id='+encodeURIComponent(post.id);
       heading.append(link);
       const img=coverImage(post); if(img)row.append(img);
       row.append(element('time',[post.category,date(post.published_at)].filter(Boolean).join(' · ')),heading,element('p',post.excerpt));

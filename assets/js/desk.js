@@ -134,3 +134,24 @@ document.addEventListener('pointermove', event => {
   style.setProperty('--drift-x', ((event.clientX / innerWidth - 0.5) * 16) + 'px');
   style.setProperty('--drift-y', ((event.clientY / innerHeight - 0.5) * 12) + 'px');
 }, {passive:true});
+
+let pendingPostId;
+el('postForm').onsubmit = async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const button = form.querySelector('button');
+  if (button.disabled) return;
+  button.disabled = true;
+  const feedback = el('postFeedback');
+  feedback.textContent = 'Publishing…';
+  try {
+    pendingPostId ||= crypto.randomUUID();
+    const post = await request('admin/blog', {id:pendingPostId, ...Object.fromEntries(new FormData(form))});
+    pendingPostId = null;
+    form.reset();
+    const link = node('a','Open published article');
+    link.href = 'blog.html?id=' + encodeURIComponent(post.id);
+    feedback.replaceChildren(link);
+  } catch(error) { feedback.textContent = error.message; }
+  finally { button.disabled = false; }
+};

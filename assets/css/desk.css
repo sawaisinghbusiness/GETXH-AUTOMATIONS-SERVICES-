@@ -24,3 +24,4 @@ body:has(#login:not([hidden]))::after {
   transform:translate(calc(-1 * var(--drift-x,0px)),calc(-1 * var(--drift-y,0px)));
 }
 @media(prefers-reduced-motion:reduce){body:has(#login:not([hidden]))::before,body:has(#login:not([hidden]))::after{transform:none;transition:none}}
+.blog-editor{background:white;border:1px solid #ccd1c4;margin:18px 0;border-radius:10px}.blog-editor summary{cursor:pointer;font-weight:650}.blog-editor form{border:none;padding:16px 20px}.blog-editor textarea{display:block;width:100%;font:inherit;padding:12px;margin:6px 0 18px;resize:vertical}.blog-editor a{color:inherit;text-decoration:underline}

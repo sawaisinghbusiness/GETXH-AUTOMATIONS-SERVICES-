@@ -311,3 +311,11 @@ h2,.sec-head h2,#demo h2{font-size:clamp(2.35rem,4.2vw,4.3rem)}
   .prs-route-wide {display:none}
 }
 @media(min-width:901px){.prs-route-phone{display:none}}
+@media(min-width:901px){.prs-art{grid-column:2;grid-row:1}.prs-copy{grid-column:1;grid-row:1}} @media(max-width:900px){.page-index .nav__right .btn{display:inline-flex}}
+
+.journal {padding-block:clamp(92px,12vw,150px) 64px;min-height:75vh;max-width:880px;overflow-wrap:anywhere}
+.journal h1 {font-size:clamp(2.5rem,6vw,5rem);margin:16px 0 32px}
+.journal time {display:block;color:var(--slate-2);font-size:.9rem}
+.journal article {padding:24px 0;border-top:1px solid var(--line)}
+.journal article h2 {font-size:clamp(1.5rem,3vw,2.25rem);margin:8px 0;line-height:1.15}
+.journal .article-text {white-space:pre-wrap;max-width:66ch;margin-top:24px;font-size:1.1rem;line-height:1.7}

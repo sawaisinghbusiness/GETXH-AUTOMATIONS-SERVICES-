@@ -110,7 +110,7 @@ function whatsappLink(message) {
     status.textContent = "Sending enquiry?";
     try {
       const res = await fetch("https://backend-for-getxh-automation.onrender.com/api/enquiries", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({...Object.fromEntries(new FormData(form)),plan})});
-      if (!res.ok) throw new Error(res.status === 400 ? "Check your name and phone number." : "Could not send. Please try again.");
+      if (!res.ok) throw new Error(res.status === 400 ? "Check your name, phone number and email address." : "Could not send. Please try again.");
       form.reset();
       status.textContent = "Enquiry received. Our team will contact you.";
     } catch (error) {status.textContent = error.message;}
@@ -277,3 +277,10 @@ document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new D
     });
   });
 })();
+
+function openLinkedEnquiry() {
+  const target = document.getElementById(location.hash.slice(1));
+  if (target?.matches('details.foot-enquiry')) target.open = true;
+}
+openLinkedEnquiry();
+window.addEventListener('hashchange', openLinkedEnquiry);

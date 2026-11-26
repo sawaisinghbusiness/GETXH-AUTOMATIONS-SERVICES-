@@ -209,3 +209,36 @@ h2,.sec-head h2,#demo h2{font-size:clamp(2.35rem,4.2vw,4.3rem)}
 .prs-home .prs-primary{border-radius:9px;padding:14px 22px}
 @media(max-width:900px){.page-index .nav__inner{width:calc(100% - 40px);min-height:68px}.prs-announcement{font-size:.8rem}}
 .admin-entry{font-weight:600;font-size:.9rem;padding:8px;color:inherit}.page-index .admin-entry{color:#f3f4f1}#signin{display:grid;max-width:28rem;gap:12px}#credential{padding:12px;font:inherit;border:1px solid var(--line);border-radius:6px}
+
+.compact-foot {background:#101113;color:#f1f3ed;padding:12px 0}
+.foot-enquiry {scroll-margin-top:84px}
+.foot-enquiry summary {display:flex;align-items:center;justify-content:space-between;min-height:48px;font-weight:600;cursor:pointer;list-style:none}
+.foot-enquiry summary::-webkit-details-marker {display:none}
+.foot-enquiry summary::after {content:'+';font-size:1.5rem;color:var(--lime)}
+.foot-enquiry[open] summary::after {content:'-'}
+.foot-enquiry .form {max-width:38rem;margin:10px 0 24px;background:#fff;color:#171917;padding:20px;border-radius:12px}
+.compact-foot .form label,.compact-foot .form .contact-note,.compact-foot .form .contact-note a {color:#354030}
+.foot-base,.foot-base nav {display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px}
+.foot-base {justify-content:space-between;border-top:1px solid #41433e;color:#c1c5bc;font-size:.84rem;padding-top:4px}
+.foot-base a {display:inline-flex;align-items:center;min-height:44px;color:inherit}
+@media(max-width:640px){
+ .container,.page-index .nav__inner,.nav__inner,.nav.scrolled .nav__inner {width:calc(100% - 32px);padding-inline:0;margin-inline:auto}
+ .section {padding-block:38px}
+ .sec-head {margin-bottom:20px;text-align:left}
+ .grid.g-2,.grid.g-3,.grid.g-4,.bento {grid-template-columns:minmax(0,1fr);gap:12px}
+ .bento .span-2 {grid-column:auto}
+ .grid>*,.prs-art,.prs-copy,.form__row>* {min-width:0}
+ .prs-home {grid-template-columns:minmax(0,1fr)}
+ .prs-copy {padding:28px 16px 8px}
+ .prs-home h1 {font-size:clamp(2.45rem,10vw,3.6rem);line-height:1.02}
+ .prs-intro {font-size:1rem;line-height:1.5;margin-bottom:20px}
+ .prs-art img {height:clamp(144px,38vw,215px)}
+ .prs-steps {max-width:100%;padding-inline:16px}
+ .nav__right .btn {display:inline-flex;padding:8px 12px;min-height:44px}
+ .nav__right {gap:4px}
+ .page-index .nav.open .nav__links a {color:#171a16}
+ .foot-base {font-size:.8rem;column-gap:8px}
+ .foot-base nav {gap:12px}
+ .foot-enquiry .form {padding:16px}
+ input,select,textarea {font-size:16px}
+}
